@@ -1,6 +1,6 @@
 <?php
 
-use Illuminate\Http\Request;
+use App\Modules\Tap\Controllers\RedirectController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -9,21 +9,21 @@ use Illuminate\Support\Facades\Route;
 |--------------------------------------------------------------------------
 */
 
-// Fast Redirect Route for NFC & QR Stikers (e.g. /kopisudut?src=nfc&p=KPS-001)
-// Kecepatan di bawah 1 detik, mencatat tap ke database queue.
-Route::get('/r/{slug}', function (string $slug, Request $request) {
-    $source = $request->query('src', 'nfc'); // 'nfc' or 'qr'
-    $pointCode = $request->query('p');
+// Explicit Fast Redirect Route (e.g. /r/kopisudut?src=nfc&p=KPS-001)
+Route::get('/r/{slug}', [RedirectController::class, 'handle'])->name('tap.redirect');
 
-    // Default demo fallback URL
-    $targetGoogleReviewUrl = 'https://maps.app.goo.gl/kopi-sudut-official';
+// SPA Frontend Reserved Routes
+$reservedPrefixes = 'generator|harga|pesan|demo|masuk|portal|admin|api';
 
-    // Dispatch asynchronous job here: RecordTapJob::dispatch($slug, $source, $pointCode, $request->userAgent());
+// Any reserved route serves the Vue 3 SPA
+Route::get('/{any}', function () {
+    return view('app');
+})->where('any', "^({$reservedPrefixes})(/.*)?$");
 
-    return redirect()->away($targetGoogleReviewUrl, 302);
+// Root landing page
+Route::get('/', function () {
+    return view('app');
 });
 
-// Single Page Application (Vue 3 + TypeScript fallback)
-Route::get('/{any?}', function () {
-    return view('app');
-})->where('any', '.*');
+// Dynamic Client Short Link (e.g. /kopisudut?src=nfc&p=KPS-001)
+Route::get('/{slug}', [RedirectController::class, 'handle'])->where('slug', '^[a-zA-Z0-9\-_]+$');
