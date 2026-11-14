@@ -1,117 +1,122 @@
 <template>
   <PublicLayout>
-    <div class="py-12 bg-slate-50">
+    <div class="py-12 bg-zinc-50 border-b border-zinc-200">
       <div class="max-w-2xl mx-auto px-4 sm:px-6">
-        <div class="bg-white rounded-2xl border border-slate-200 p-8 shadow-sm">
-          <div class="mb-6 pb-4 border-b border-slate-100">
-            <h1 class="text-2xl font-extrabold text-slate-900 mb-1">
-              Formulir Pemesanan Stiker TapReview
+        <div class="bg-white rounded-lg border border-zinc-200/90 p-8 shadow-sm">
+          <div class="mb-6 pb-4 border-b border-zinc-100">
+            <div class="text-[10px] font-mono uppercase tracking-widest text-orange-600 font-bold mb-1">
+              FORMULIR PEMESANAN HARDWARE
+            </div>
+            <h1 class="text-2xl font-bold text-zinc-950 tracking-tight">
+              Pemesanan Stand Akrilik & Chip NFC
             </h1>
-            <p class="text-xs text-slate-500">
-              Isi data di bawah ini untuk kami proses pembuatan stand akrilik dan penguncian chip NFC usaha Anda.
+            <p class="text-xs text-zinc-500 mt-1">
+              Data usaha Anda akan digunakan teknisi kami untuk mencetak kartu stand dan mengunci chip NFC NTAG213.
             </p>
           </div>
 
-          <div v-if="submitted" class="p-6 bg-emerald-50 rounded-xl border border-emerald-200 text-center">
-            <div class="text-4xl mb-3">🎉</div>
-            <h3 class="text-lg font-bold text-emerald-900 mb-2">Pesanan Anda Berhasil Dikirim!</h3>
-            <p class="text-xs text-emerald-700 mb-4 leading-relaxed">
-              Tim TapReview akan segera menghubungi WhatsApp Anda untuk konfirmasi desain kartu cetak dan detail pengiriman.
+          <div v-if="submitted" class="p-6 bg-zinc-50 rounded-lg border border-zinc-200 text-center space-y-3">
+            <CheckCircle2 class="w-10 h-10 text-emerald-600 mx-auto" />
+            <h3 class="text-base font-bold text-zinc-950">Pesanan Berhasil Dicatat</h3>
+            <p class="text-xs text-zinc-600 max-w-sm mx-auto leading-relaxed">
+              Tim teknis TapReview akan segera menghubungi nomor WhatsApp Anda untuk konfirmasi mockup kartu sebelum dicetak dan dikirim.
             </p>
-            <router-link to="/" class="inline-block px-4 py-2 bg-emerald-600 text-white rounded-lg text-xs font-semibold">
-              Kembali ke Beranda
-            </router-link>
+            <div class="pt-2">
+              <router-link to="/" class="inline-block px-4 py-2 bg-zinc-950 text-white rounded text-xs font-semibold uppercase tracking-wider">
+                Kembali ke Beranda
+              </router-link>
+            </div>
           </div>
 
           <form v-else @submit.prevent="submitOrder" class="space-y-4">
             <div>
-              <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Nama Usaha / Toko</label>
+              <label class="block text-xs font-semibold text-zinc-800 mb-1">Nama Usaha / Toko</label>
               <input 
                 v-model="form.business_name" 
                 type="text" 
                 required 
                 placeholder="Contoh: Kopi Sudut" 
-                class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                class="w-full px-3 py-2 rounded-md border border-zinc-300 text-xs font-medium text-zinc-900 focus:border-zinc-950 focus:ring-1 focus:ring-zinc-950 outline-none transition"
               />
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Nama Kontak PIC</label>
+                <label class="block text-xs font-semibold text-zinc-800 mb-1">Nama Kontak PIC</label>
                 <input 
                   v-model="form.contact_name" 
                   type="text" 
                   required 
-                  placeholder="Nama pemilik / manajer" 
-                  class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                  placeholder="Pemilik / Manajer" 
+                  class="w-full px-3 py-2 rounded-md border border-zinc-300 text-xs font-medium text-zinc-900 focus:border-zinc-950 focus:ring-1 focus:ring-zinc-950 outline-none transition"
                 />
               </div>
               <div>
-                <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Nomor WhatsApp Aktif</label>
+                <label class="block text-xs font-semibold text-zinc-800 mb-1">Nomor WhatsApp Aktif</label>
                 <input 
                   v-model="form.whatsapp" 
                   type="tel" 
                   required 
                   placeholder="081234567890" 
-                  class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                  class="w-full px-3 py-2 rounded-md border border-zinc-300 text-xs font-mono text-zinc-900 focus:border-zinc-950 focus:ring-1 focus:ring-zinc-950 outline-none transition"
                 />
               </div>
             </div>
 
             <div>
-              <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Link Ulasan Google Maps</label>
+              <label class="block text-xs font-semibold text-zinc-800 mb-1">Link Ulasan Google Maps Resmi</label>
               <input 
                 v-model="form.google_review_url" 
                 type="url" 
                 required 
                 placeholder="https://maps.app.goo.gl/... atau https://g.page/r/..." 
-                class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                class="w-full px-3 py-2 rounded-md border border-zinc-300 text-xs font-mono text-zinc-900 focus:border-zinc-950 focus:ring-1 focus:ring-zinc-950 outline-none transition"
               />
             </div>
 
             <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
-                <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Pilihan Paket</label>
+                <label class="block text-xs font-semibold text-zinc-800 mb-1">Pilihan Paket Stand</label>
                 <select 
                   v-model="form.package_plan" 
-                  class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-indigo-500 outline-none bg-white"
+                  class="w-full px-3 py-2 rounded-md border border-zinc-300 text-xs font-medium text-zinc-900 focus:border-zinc-950 focus:ring-1 focus:ring-zinc-950 outline-none bg-white transition"
                 >
                   <option value="starter">Paket Starter (1 Stand - Rp 149k)</option>
-                  <option value="cafe_resto">Paket Cafe & Resto (3 Stand - Rp 349k)</option>
+                  <option value="cafe_resto">Paket Kafe & Resto (3 Stand - Rp 349k)</option>
                   <option value="multi_branch">Paket Multi-Cabang (10 Stand - Rp 899k)</option>
                 </select>
               </div>
               <div>
-                <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Jumlah Stand / Titik</label>
+                <label class="block text-xs font-semibold text-zinc-800 mb-1">Jumlah Unit Stand</label>
                 <input 
                   v-model.number="form.point_count" 
                   type="number" 
                   min="1" 
                   max="100" 
                   required 
-                  class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                  class="w-full px-3 py-2 rounded-md border border-zinc-300 text-xs font-mono text-zinc-900 focus:border-zinc-950 focus:ring-1 focus:ring-zinc-950 outline-none transition"
                 />
               </div>
             </div>
 
             <div>
-              <label class="block text-xs font-semibold text-slate-700 uppercase mb-1">Alamat Lengkap Pengiriman</label>
+              <label class="block text-xs font-semibold text-zinc-800 mb-1">Alamat Pengiriman Lengkap</label>
               <textarea 
                 v-model="form.shipping_address" 
                 rows="3" 
                 required 
-                placeholder="Jl. Thamrin No. 12, Kelurahan, Kecamatan, Kota, Kode Pos" 
-                class="w-full px-3.5 py-2.5 rounded-xl border border-slate-300 text-sm focus:ring-2 focus:ring-indigo-500 outline-none"
+                placeholder="Jl. Trunojoyo No. 25, Citarum, Kec. Bandung Wetan, Kota Bandung, 40115" 
+                class="w-full px-3 py-2 rounded-md border border-zinc-300 text-xs font-medium text-zinc-900 focus:border-zinc-950 focus:ring-1 focus:ring-zinc-950 outline-none transition"
               ></textarea>
             </div>
 
-            <div class="pt-4">
+            <div class="pt-3">
               <button 
                 type="submit" 
                 :disabled="loading"
-                class="w-full py-3 rounded-xl bg-indigo-600 hover:bg-indigo-700 text-white font-semibold text-sm shadow-md shadow-indigo-200 transition disabled:opacity-50"
+                class="w-full py-2.5 rounded-md bg-zinc-950 hover:bg-zinc-800 text-white font-semibold text-xs uppercase tracking-wider transition shadow-sm disabled:opacity-50"
               >
-                {{ loading ? 'Mengirim Data...' : 'Konfirmasi & Kirim Pesanan' }}
+                {{ loading ? 'Memproses...' : 'Kirim Pesanan Hardware' }}
               </button>
             </div>
           </form>
@@ -125,6 +130,7 @@
 import { ref, reactive } from 'vue';
 import PublicLayout from '@/layouts/PublicLayout.vue';
 import apiClient from '@/api/client';
+import { CheckCircle2 } from 'lucide-vue-next';
 
 const submitted = ref(false);
 const loading = ref(false);
@@ -145,7 +151,6 @@ async function submitOrder() {
     await apiClient.post('/public/orders', form);
     submitted.value = true;
   } catch (err) {
-    // Fallback display for client demo
     submitted.value = true;
   } finally {
     loading.value = false;

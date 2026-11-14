@@ -1,53 +1,88 @@
 <template>
-  <div class="min-h-screen flex bg-slate-100">
-    <!-- Sidebar -->
-    <aside class="w-64 bg-slate-900 text-white flex flex-col shrink-0">
-      <div class="h-16 flex items-center px-6 border-b border-slate-800 gap-3">
-        <div class="w-8 h-8 rounded-lg bg-indigo-500 flex items-center justify-center font-bold text-white">T</div>
-        <div>
-          <div class="font-bold text-sm tracking-tight">TapReview Portal</div>
-          <div class="text-[11px] text-slate-400">Kopi Sudut (Client)</div>
+  <div class="min-h-screen flex bg-zinc-100">
+    <!-- Industrial Sidebar -->
+    <aside class="w-64 bg-zinc-950 text-white flex flex-col shrink-0 border-r border-zinc-800">
+      <div class="h-16 flex items-center px-6 border-b border-zinc-850 justify-between">
+        <div class="flex items-center gap-2.5">
+          <div class="w-7 h-7 rounded bg-white text-zinc-950 font-mono font-bold text-xs flex items-center justify-center">
+            TR
+          </div>
+          <div>
+            <div class="font-bold text-xs tracking-tight uppercase">Portal Klien</div>
+            <div class="text-[10px] text-zinc-400 font-mono">KOPI SUDUT</div>
+          </div>
         </div>
+        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" title="System Online"></span>
       </div>
 
-      <nav class="p-4 space-y-1 flex-1 text-sm">
-        <router-link to="/portal" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-colors" active-class="bg-indigo-600 text-white font-medium">
-          <span>📊</span> Ringkasan
+      <nav class="p-3 space-y-1 flex-1 text-xs font-medium">
+        <router-link 
+          to="/portal" 
+          class="flex items-center gap-2.5 px-3 py-2 rounded-md text-zinc-400 hover:text-white hover:bg-zinc-900 transition-colors"
+          active-class="bg-zinc-800 text-white font-semibold"
+        >
+          <LayoutDashboard class="w-4 h-4 text-zinc-400" />
+          <span>Ringkasan Tap</span>
         </router-link>
-        <router-link to="/portal/points" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-colors" active-class="bg-indigo-600 text-white font-medium">
-          <span>🏷️</span> Titik Stiker (NFC & QR)
+
+        <router-link 
+          to="/portal/points" 
+          class="flex items-center gap-2.5 px-3 py-2 rounded-md text-zinc-400 hover:text-white hover:bg-zinc-900 transition-colors"
+          active-class="bg-zinc-800 text-white font-semibold"
+        >
+          <Tag class="w-4 h-4 text-zinc-400" />
+          <span>Titik Stiker (NFC/QR)</span>
         </router-link>
-        <router-link to="/portal/destination" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-colors" active-class="bg-indigo-600 text-white font-medium">
-          <span>🔗</span> Link Ulasan Google
+
+        <router-link 
+          to="/portal/destination" 
+          class="flex items-center gap-2.5 px-3 py-2 rounded-md text-zinc-400 hover:text-white hover:bg-zinc-900 transition-colors"
+          active-class="bg-zinc-800 text-white font-semibold"
+        >
+          <Link2 class="w-4 h-4 text-zinc-400" />
+          <span>Link Ulasan Google</span>
         </router-link>
-        <router-link to="/portal/materials" class="flex items-center gap-3 px-3 py-2.5 rounded-lg text-slate-300 hover:bg-slate-800 hover:text-white transition-colors" active-class="bg-indigo-600 text-white font-medium">
-          <span>🖨️</span> Materi Siap Cetak
+
+        <router-link 
+          to="/portal/materials" 
+          class="flex items-center gap-2.5 px-3 py-2 rounded-md text-zinc-400 hover:text-white hover:bg-zinc-900 transition-colors"
+          active-class="bg-zinc-800 text-white font-semibold"
+        >
+          <Printer class="w-4 h-4 text-zinc-400" />
+          <span>Materi Siap Cetak</span>
         </router-link>
       </nav>
 
-      <div class="p-4 border-t border-slate-800">
-        <router-link to="/" class="flex items-center gap-2 text-xs text-slate-400 hover:text-white mb-3">
-          ← Kembali ke Website
+      <div class="p-4 border-t border-zinc-850 space-y-2">
+        <router-link to="/" class="flex items-center gap-2 text-xs text-zinc-400 hover:text-white transition-colors">
+          <ArrowLeft class="w-3.5 h-3.5" />
+          <span>Kembali ke Website</span>
         </router-link>
-        <router-link to="/masuk" class="flex items-center justify-center w-full py-2 px-3 text-xs font-medium text-rose-400 hover:bg-rose-950/40 rounded-md border border-rose-900/50">
-          Keluar
+        <router-link to="/masuk" class="flex items-center justify-center gap-1.5 w-full py-1.5 px-3 text-[11px] font-semibold text-rose-400 hover:bg-rose-950/30 rounded border border-rose-900/40 transition">
+          <LogOut class="w-3.5 h-3.5" />
+          <span>Keluar Sesi</span>
         </router-link>
       </div>
     </aside>
 
     <!-- Main Content Area -->
     <div class="flex-1 flex flex-col min-w-0">
-      <header class="h-16 bg-white border-b border-slate-200 px-6 flex items-center justify-between">
-        <h1 class="text-base font-semibold text-slate-800">Portal Klien</h1>
+      <header class="h-16 bg-white border-b border-zinc-200 px-6 flex items-center justify-between">
+        <div class="flex items-center gap-2 text-xs font-mono text-zinc-500 uppercase">
+          <span>PORTAL</span>
+          <span>/</span>
+          <span class="text-zinc-900 font-bold">TERMINAL PELAPORAN</span>
+        </div>
         <div class="flex items-center gap-3">
-          <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-800">
-            Status: Aktif
+          <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[10px] font-mono font-medium bg-emerald-50 text-emerald-800 border border-emerald-200">
+            <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
+            STATUS: AKTIF
           </span>
-          <span class="text-xs text-slate-500">Paket Pro</span>
+          <span class="text-xs font-mono text-zinc-400">PAKET KAFE & RESTO</span>
         </div>
       </header>
 
-      <main class="flex-1 p-6 overflow-y-auto">
+      <main class="flex-1 p-6 sm:p-8 overflow-y-auto">
         <router-view />
       </main>
     </div>
@@ -55,5 +90,5 @@
 </template>
 
 <script setup lang="ts">
-// Client Layout
+import { LayoutDashboard, Tag, Link2, Printer, ArrowLeft, LogOut } from 'lucide-vue-next';
 </script>
