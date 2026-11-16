@@ -31,12 +31,14 @@ const routes: RouteRecordRaw[] = [
     path: '/masuk',
     name: 'login',
     component: () => import('@/modules/auth/views/LoginView.vue'),
+    meta: { guestOnly: true },
   },
 
-  // Client Portal Routes
+  // Protected Client Portal Routes
   {
     path: '/portal',
     component: () => import('@/layouts/ClientLayout.vue'),
+    meta: { requiresAuth: true, role: 'client' },
     children: [
       {
         path: '',
@@ -61,10 +63,11 @@ const routes: RouteRecordRaw[] = [
     ],
   },
 
-  // Admin Panel Routes
+  // Protected Admin Panel Routes
   {
     path: '/admin',
     component: () => import('@/layouts/AdminLayout.vue'),
+    meta: { requiresAuth: true, role: 'admin' },
     children: [
       {
         path: '',
@@ -106,6 +109,48 @@ const router = createRouter({
   scrollBehavior() {
     return { top: 0 };
   },
+});
+
+// Authentication & RBAC Navigation Guards
+router.beforeEach((to, from, next) => {
+  const token = localStorage.getItem('tapreview_token');
+  const userJson = localStorage.getItem('tapreview_user');
+  const user = userJson ? JSON.parse(userJson) : null;
+
+  const isAuthenticated = !!token;
+  const isAdmin = user?.role === 'super_admin' || user?.role === 'admin_staff';
+  const isClient = user?.role === 'client_owner' || user?.role === 'client_manager';
+
+  // 1. Guest only page (/masuk)
+  if (to.meta.guestOnly && isAuthenticated) {
+    if (isAdmin) {
+      return next({ path: '/admin' });
+    }
+    return next({ path: '/portal' });
+  }
+
+  // 2. Check protected route requiring authentication
+  if (to.matched.some((record) => record.meta.requiresAuth)) {
+    if (!isAuthenticated) {
+      return next({ path: '/masuk', query: { redirect: to.fullPath } });
+    }
+
+    // Role check for admin panel
+    if (to.matched.some((record) => record.meta.role === 'admin')) {
+      if (!isAdmin) {
+        return next({ path: '/portal' });
+      }
+    }
+
+    // Role check for client portal
+    if (to.matched.some((record) => record.meta.role === 'client')) {
+      if (!isClient && !isAdmin) {
+        return next({ path: '/masuk' });
+      }
+    }
+  }
+
+  next();
 });
 
 export default router;

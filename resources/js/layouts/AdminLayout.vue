@@ -72,14 +72,21 @@
       </nav>
 
       <div class="p-4 border-t border-zinc-850 space-y-2">
+        <div class="px-2 py-1 bg-zinc-900 rounded text-[10px] font-mono text-zinc-400 truncate">
+          {{ authStore.user?.email || 'SuperAdmin' }}
+        </div>
         <router-link to="/" class="flex items-center gap-2 text-xs text-zinc-400 hover:text-white transition-colors">
           <ArrowLeft class="w-3.5 h-3.5" />
           <span>Kembali ke Website</span>
         </router-link>
-        <router-link to="/masuk" class="flex items-center justify-center gap-1.5 w-full py-1.5 px-3 text-[11px] font-semibold text-rose-400 hover:bg-rose-950/30 rounded border border-rose-900/40 transition">
+        <button 
+          @click="authStore.logout()"
+          type="button"
+          class="flex items-center justify-center gap-1.5 w-full py-1.5 px-3 text-[11px] font-semibold text-rose-400 hover:bg-rose-950/30 rounded border border-rose-900/40 transition"
+        >
           <LogOut class="w-3.5 h-3.5" />
-          <span>Keluar Admin</span>
-        </router-link>
+          <span>Keluar Sesi</span>
+        </button>
       </div>
     </aside>
 
@@ -92,7 +99,7 @@
           <span class="text-zinc-900 font-bold">PUSAT KONTROL HARDWARE</span>
         </div>
         <div class="flex items-center gap-3 text-xs font-mono text-zinc-500">
-          <span>POSTGRESQL 16</span>
+          <span class="text-orange-600 font-bold">ADMIN: {{ authStore.user?.name || 'Administrator' }}</span>
           <span>•</span>
           <span class="text-emerald-700 font-semibold flex items-center gap-1">
             <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
@@ -109,5 +116,8 @@
 </template>
 
 <script setup lang="ts">
+import { useAuthStore } from '@/stores/auth';
 import { LayoutDashboard, Users, Radio, Palette, PackageCheck, ShieldCheck, ArrowLeft, LogOut } from 'lucide-vue-next';
+
+const authStore = useAuthStore();
 </script>

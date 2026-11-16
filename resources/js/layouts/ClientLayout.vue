@@ -9,7 +9,9 @@
           </div>
           <div>
             <div class="font-bold text-xs tracking-tight uppercase">Portal Klien</div>
-            <div class="text-[10px] text-zinc-400 font-mono">KOPI SUDUT</div>
+            <div class="text-[10px] text-zinc-400 font-mono truncate max-w-[120px]">
+              {{ authStore.user?.business_name || 'KONTROL KLIEN' }}
+            </div>
           </div>
         </div>
         <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" title="System Online"></span>
@@ -54,14 +56,21 @@
       </nav>
 
       <div class="p-4 border-t border-zinc-850 space-y-2">
+        <div class="px-2 py-1 bg-zinc-900 rounded text-[10px] font-mono text-zinc-400 truncate">
+          {{ authStore.user?.email || 'User Session' }}
+        </div>
         <router-link to="/" class="flex items-center gap-2 text-xs text-zinc-400 hover:text-white transition-colors">
           <ArrowLeft class="w-3.5 h-3.5" />
           <span>Kembali ke Website</span>
         </router-link>
-        <router-link to="/masuk" class="flex items-center justify-center gap-1.5 w-full py-1.5 px-3 text-[11px] font-semibold text-rose-400 hover:bg-rose-950/30 rounded border border-rose-900/40 transition">
+        <button 
+          @click="authStore.logout()"
+          type="button"
+          class="flex items-center justify-center gap-1.5 w-full py-1.5 px-3 text-[11px] font-semibold text-rose-400 hover:bg-rose-950/30 rounded border border-rose-900/40 transition"
+        >
           <LogOut class="w-3.5 h-3.5" />
           <span>Keluar Sesi</span>
-        </router-link>
+        </button>
       </div>
     </aside>
 
@@ -76,7 +85,7 @@
         <div class="flex items-center gap-3">
           <span class="inline-flex items-center gap-1.5 px-2 py-0.5 rounded text-[10px] font-mono font-medium bg-emerald-50 text-emerald-800 border border-emerald-200">
             <span class="w-1.5 h-1.5 rounded-full bg-emerald-600"></span>
-            STATUS: AKTIF
+            LOGIN: {{ authStore.user?.name || 'Klien' }}
           </span>
           <span class="text-xs font-mono text-zinc-400">PAKET KAFE & RESTO</span>
         </div>
@@ -90,5 +99,8 @@
 </template>
 
 <script setup lang="ts">
+import { useAuthStore } from '@/stores/auth';
 import { LayoutDashboard, Tag, Link2, Printer, ArrowLeft, LogOut } from 'lucide-vue-next';
+
+const authStore = useAuthStore();
 </script>
