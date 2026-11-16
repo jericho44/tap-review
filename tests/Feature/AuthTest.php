@@ -150,9 +150,6 @@ class AuthTest extends TestCase
                 'message' => 'Sesi berhasil diakhiri.',
             ]);
 
-        // Flush guard memory to simulate next HTTP request lifecycle
-        app('auth')->forgetGuards();
-
         // Attempting to access protected route with revoked token should fail
         $check = $this->withHeader('Authorization', 'Bearer '.$token)
             ->getJson('/api/v1/client/dashboard/summary');
@@ -160,3 +157,4 @@ class AuthTest extends TestCase
         $check->assertStatus(401);
     }
 }
+
